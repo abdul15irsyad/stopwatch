@@ -1,0 +1,28 @@
+.stopwatch-section {
+  padding-top: 1rem;
+}
+
+.stopwatch-section .stopwatch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+
+.stopwatch-section .action {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 1080px) {
+  .stopwatch-section .stopwatch {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .stopwatch-section .stopwatch {
+    font-size: 48px;
+  }
+}
