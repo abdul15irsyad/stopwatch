@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 import styles from './coming-soon.module.css';
 import { Text } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';

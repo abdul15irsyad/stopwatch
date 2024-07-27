@@ -59,7 +59,7 @@ export const StopwatchSection = () => {
 
   return (
     <div className={styles['stopwatch-section']}>
-      <Text fz={'h1'} fw="bold">
+      <Text fz="h1" fw="bold">
         Stopwatch
       </Text>
       <Grid>

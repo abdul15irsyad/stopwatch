@@ -4,6 +4,7 @@ import '@mantine/core/styles.css';
 import './globals.css';
 import { AllProvider } from '@/components/providers/all-provider';
 import { ColorSchemeScript } from '@mantine/core';
+import { ReactNode } from 'react';
 
 export const figtree = LocalFont({
   src: '../../public/fonts/Figtree/Figtree-VariableFont_wght.ttf',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">

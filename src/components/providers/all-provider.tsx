@@ -1,5 +1,5 @@
 import { createTheme, MantineProvider } from '@mantine/core';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export const AllProvider = ({ children }: { children: ReactNode }) => {
   const theme = createTheme({});

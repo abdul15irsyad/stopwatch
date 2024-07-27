@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Grid, Text } from '@mantine/core';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import * as icons from '@tabler/icons-react';
 import styles from './navbar.module.css';
 // import { AlarmSection } from '@/sections/alarm/alarm.section';
