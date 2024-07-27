@@ -12,8 +12,8 @@ export const figtree = LocalFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Clock | Irsyad Abdul',
-  description: 'use timer tools like timer, stopwatch, world clock and alarm'
+  title: 'Stopwatch, World Clock, Timer And Alarm',
+  description: 'use timer tools like stopwatch, world clock, timer and alarm'
 };
 
 export default function RootLayout({

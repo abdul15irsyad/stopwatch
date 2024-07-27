@@ -1,18 +1,54 @@
 'use client';
 
 import { Container, Grid, Text } from '@mantine/core';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { ReactNode } from 'react';
 import * as icons from '@tabler/icons-react';
 import styles from './navbar.module.css';
-import { IMenu, menuIds } from './layout';
+import { AlarmSection } from '@/sections/alarm/alarm.section';
+import { ClockSection } from '@/sections/clock/clock.section';
+import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
+import { TimerSection } from '@/sections/timer/timer.section';
+import { useNavbarStore } from '@/zustand/use-navbar.store';
 
-interface Props {
-  menus: IMenu[];
-  activeTab: (typeof menuIds)[number];
-  setActiveTab: Dispatch<SetStateAction<(typeof menuIds)[number]>>;
+export const menuIds = ['stopwatch', 'timer', 'clock', 'alarm'] as const;
+
+export interface IMenu {
+  id: (typeof menuIds)[number];
+  label: string;
+  icon: string;
+  component?: ReactNode;
 }
 
-export const Navbar = ({ menus, activeTab, setActiveTab }: Props) => {
+export const menus: IMenu[] = [
+  {
+    id: 'stopwatch',
+    label: 'Stopwatch',
+    icon: 'IconClockRecord',
+    component: <StopwatchSection />
+  },
+  {
+    id: 'clock',
+    label: 'Clock',
+    icon: 'IconClock',
+    component: <ClockSection />
+  },
+  {
+    id: 'timer',
+    label: 'Timer',
+    icon: 'IconHourglassEmpty',
+    component: <TimerSection />
+  },
+  {
+    id: 'alarm',
+    label: 'Alarm',
+    icon: 'IconAlarm',
+    component: <AlarmSection />
+  }
+];
+
+export const Navbar = () => {
+  const { activeTab, setActiveTab } = useNavbarStore();
+
   return (
     <div className={styles.navbar}>
       <Container>
