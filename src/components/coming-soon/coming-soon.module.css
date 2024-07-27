@@ -10,3 +10,19 @@
   width: 200px;
   height: auto;
 }
+
+@media (max-width: 767px) {
+  .coming-soon {
+    padding: 3rem 1rem;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .coming-soon .illustration img {
+    width: 160px;
+  }
+
+  .coming-soon .text {
+    text-align: center;
+  }
+}

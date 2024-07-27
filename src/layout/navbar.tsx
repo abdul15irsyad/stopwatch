@@ -4,7 +4,7 @@ import { Container, Grid, Text } from '@mantine/core';
 import React, { ReactNode } from 'react';
 import * as icons from '@tabler/icons-react';
 import styles from './navbar.module.css';
-import { AlarmSection } from '@/sections/alarm/alarm.section';
+// import { AlarmSection } from '@/sections/alarm/alarm.section';
 import { ClockSection } from '@/sections/clock/clock.section';
 import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
 import { TimerSection } from '@/sections/timer/timer.section';
@@ -37,13 +37,13 @@ export const menus: IMenu[] = [
     label: 'Timer',
     icon: 'IconHourglassEmpty',
     component: <TimerSection />
-  },
-  {
-    id: 'alarm',
-    label: 'Alarm',
-    icon: 'IconAlarm',
-    component: <AlarmSection />
   }
+  // {
+  //   id: 'alarm',
+  //   label: 'Alarm',
+  //   icon: 'IconAlarm',
+  //   component: <AlarmSection />
+  // }
 ];
 
 export const Navbar = () => {
@@ -56,7 +56,7 @@ export const Navbar = () => {
           {menus?.map((menu, index) => {
             const Icon = icons[menu.icon];
             return (
-              <Grid.Col span={3} key={index}>
+              <Grid.Col span="auto" key={index}>
                 <div
                   className={`${styles['nav-link']} ${activeTab === menu.id ? styles.active : ''}`}
                   onClick={() => setActiveTab(menu.id)}
