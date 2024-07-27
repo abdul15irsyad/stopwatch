@@ -52,6 +52,7 @@ export const StopwatchSection = () => {
     } else {
       if (globalInterval) {
         clearInterval(globalInterval);
+        setGlobalInterval(null);
       }
     }
   }, [isActive, setTime]);

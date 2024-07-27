@@ -9,7 +9,7 @@ type StopwatchState = {
   reset: () => void;
   addLap: (time: number) => void;
   setTime: (cb: (prev: number) => number) => void;
-  setGlobalInterval: (globalInterval: NodeJS.Timeout) => void;
+  setGlobalInterval: (globalInterval: NodeJS.Timeout | null) => void;
 };
 
 export const useStopwatchStore = create<StopwatchState>((set) => {
@@ -22,7 +22,8 @@ export const useStopwatchStore = create<StopwatchState>((set) => {
     setGlobalInterval: (globalInterval) => set({ globalInterval }),
     startStop: () =>
       set((state) => ({
-        isActive: !state.isActive
+        isActive: !state.isActive,
+        time: state.time
       })),
     reset: () =>
       set({
