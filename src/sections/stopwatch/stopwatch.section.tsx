@@ -21,10 +21,18 @@ export const chivoMono = LocalFont({
 });
 
 export const StopwatchSection = () => {
-  const { time, isActive, laps, startStop, reset, setTime, addLap } =
-    useStopwatchStore();
+  const {
+    time,
+    isActive,
+    laps,
+    globalInterval,
+    startStop,
+    reset,
+    setTime,
+    setGlobalInterval,
+    addLap
+  } = useStopwatchStore();
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const lapsRef = useRef<HTMLDivElement>(null);
 
   const scrollLapsToTop = useCallback(() => {
@@ -35,21 +43,18 @@ export const StopwatchSection = () => {
 
   useEffect(() => {
     if (isActive) {
-      intervalRef.current = setInterval(() => {
-        setTime((prev: number) => prev + 10);
-      }, 10);
+      if (!globalInterval)
+        setGlobalInterval(
+          setInterval(() => {
+            setTime((prev: number) => prev + 10);
+          }, 10)
+        );
     } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+      if (globalInterval) {
+        clearInterval(globalInterval);
       }
     }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isActive]);
+  }, [isActive, setTime]);
 
   return (
     <div className={styles['stopwatch-section']}>

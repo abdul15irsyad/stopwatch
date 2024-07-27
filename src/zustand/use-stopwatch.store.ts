@@ -4,10 +4,12 @@ type StopwatchState = {
   time: number;
   isActive: boolean;
   laps: { time: number }[];
+  globalInterval: NodeJS.Timeout | null;
   startStop: () => void;
   reset: () => void;
-  setTime: (cb: (prev: number) => number) => void;
   addLap: (time: number) => void;
+  setTime: (cb: (prev: number) => number) => void;
+  setGlobalInterval: (globalInterval: NodeJS.Timeout) => void;
 };
 
 export const useStopwatchStore = create<StopwatchState>((set) => {
@@ -16,12 +18,19 @@ export const useStopwatchStore = create<StopwatchState>((set) => {
     time: defaultTime,
     laps: [],
     isActive: false,
+    globalInterval: null,
+    setGlobalInterval: (globalInterval) => set({ globalInterval }),
     startStop: () =>
       set((state) => ({
-        isActive: !state.isActive,
-        time: state.isActive ? state.time : state.time // No change in time if it's already active
+        isActive: !state.isActive
       })),
-    reset: () => set({ time: defaultTime, isActive: false, laps: [] }),
+    reset: () =>
+      set({
+        time: defaultTime,
+        isActive: false,
+        laps: [],
+        globalInterval: null
+      }),
     setTime: (cb) => set((state) => ({ time: cb(state.time) })),
     addLap: (time: number) =>
       set((state) => ({ laps: [...state.laps, { time }] }))
