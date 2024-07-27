@@ -1,28 +1,110 @@
 .stopwatch-section {
   padding-top: 1rem;
+  padding-bottom: 80px;
 }
 
 .stopwatch-section .stopwatch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   font-size: 100px;
+  transition: 0.3s ease-out;
+  margin-top: 4rem;
+}
+
+.stopwatch-section .stopwatch.laps-exists {
+  margin-top: 0;
+  margin-bottom: -2rem;
+  transform: scale(0.5);
+}
+
+.stopwatch-section .stopwatch .milli-seconds {
+  /* font-size: 60%; */
+}
+
+.stopwatch-section .laps {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  max-height: calc(100vh - calc(80px + 70px) - 200px);
+  /* border: 1px dashed rgba(255, 255, 255, 0.25); */
+  /* background-color: rgba(255, 255, 255, 0.05); */
+  border-radius: 1rem;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.stopwatch-section .laps::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.stopwatch-section .laps::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.stopwatch-section .laps::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.stopwatch-section .laps::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.stopwatch-section .laps .lap {
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stopwatch-section .laps .lap .margin {
+  opacity: 0.5;
+  font-weight: normal;
 }
 
 .stopwatch-section .action {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  right: 0;
+  padding-bottom: 1rem;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .stopwatch-section .stopwatch {
     font-size: 80px;
+  }
+  .stopwatch-section .laps {
+    position: fixed;
+    bottom: calc(80px + 66px);
+    left: 1.5rem;
+    right: 1.5rem;
+    top: 200px;
+    max-height: unset;
   }
 }
 
 @media (max-width: 767px) {
   .stopwatch-section .stopwatch {
-    font-size: 48px;
+    font-size: 56px;
+  }
+
+  .stopwatch-section .stopwatch.laps-exists {
+    margin-bottom: -1rem;
+    transform: scale(0.75);
+  }
+
+  .stopwatch-section .laps {
+    top: 160px;
+    gap: 0.25rem;
   }
 }

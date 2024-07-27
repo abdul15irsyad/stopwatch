@@ -16,7 +16,7 @@ export const Navbar = ({ menus, activePage, setActivePage }: Props) => {
   return (
     <div className={styles.navbar}>
       <Container>
-        <Grid>
+        <Grid align="center">
           {menus?.map((menu, index) => {
             const Icon = icons[menu.icon];
             return (
@@ -25,8 +25,8 @@ export const Navbar = ({ menus, activePage, setActivePage }: Props) => {
                   className={`${styles['nav-link']} ${activePage === menu.id ? styles.active : ''}`}
                   onClick={() => setActivePage(menu.id)}
                 >
-                  <Icon stroke={2} size={24} />
-                  <Text>{menu.label}</Text>
+                  <Icon stroke={2} size={20} />
+                  <Text mb={0}>{menu.label}</Text>
                 </div>
               </Grid.Col>
             );

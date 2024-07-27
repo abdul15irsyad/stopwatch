@@ -5,6 +5,8 @@
   right: 0;
   border-top: 1px solid #232323;
   background-color: rgba(var(--background-start-rgba));
+  padding: 0.25rem 0;
+  height: 70px;
 }
 
 .navbar .nav-link {
@@ -13,8 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   opacity: 0.5;
   transition: 0.3s;
 }

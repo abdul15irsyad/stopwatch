@@ -22,7 +22,7 @@ export const figtree = LocalFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Timer',
+  title: 'Clock | Irsyad Abdul',
   description: 'use timer tools like timer, stopwatch, world clock and alarm'
 };
 
@@ -35,8 +35,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <ColorSchemeScript />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.png" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
