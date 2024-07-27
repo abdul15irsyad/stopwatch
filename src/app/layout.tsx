@@ -12,9 +12,20 @@ export const figtree = LocalFont({
   fallback: ['Helvetica', 'Arial', 'sans-serif']
 });
 
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL ?? 'https://abdul-stopwatch.vercel.app';
+
+export const commonMetaData = {
+  images: `${BASE_URL}/meta-image.jpg`,
+  title: 'Stopwatch, Clock And Timer',
+  description: 'use timer tools like stopwatch, clock and timer'
+};
+
 export const metadata: Metadata = {
-  title: 'Stopwatch, World Clock, Timer And Alarm',
-  description: 'use timer tools like stopwatch, world clock, timer and alarm'
+  ...commonMetaData,
+  openGraph: {
+    ...commonMetaData
+  }
 };
 
 export default function RootLayout({
