@@ -2,11 +2,13 @@
 
 import { Text } from '@mantine/core';
 import styles from './clock.module.css';
+import { ComingSoon } from '@/components/coming-soon/coming-soon';
 
 export const ClockSection = () => (
   <div className={styles['clock-section']}>
     <Text fz="h1" fw="bold">
       Clock
     </Text>
+    <ComingSoon />
   </div>
 );
