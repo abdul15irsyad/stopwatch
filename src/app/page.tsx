@@ -1,23 +1,17 @@
 'use client';
 
+import { IMenu, menuIds } from '@/layout/layout';
 import { Navbar } from '@/layout/navbar';
 import { AlarmSection } from '@/sections/alarm/alarm.section';
 import { ClockSection } from '@/sections/clock/clock.section';
 import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
 import { TimerSection } from '@/sections/timer/timer.section';
 import { Container } from '@mantine/core';
-import React, { ReactNode, useState } from 'react';
-
-export type MenuIdType = 'stopwatch' | 'timer' | 'clock' | 'alarm';
-export interface IMenu {
-  id: MenuIdType;
-  label: string;
-  icon: string;
-  component?: ReactNode;
-}
+import React, { useState } from 'react';
 
 export default () => {
-  const [activePage, setActivePage] = useState<MenuIdType>('stopwatch');
+  const [activeTab, setActiveTab] =
+    useState<(typeof menuIds)[number]>('stopwatch');
 
   const menus: IMenu[] = [
     {
@@ -48,13 +42,9 @@ export default () => {
   return (
     <>
       <Container>
-        {menus.find(({ id }) => id === activePage)?.component}
+        {menus.find(({ id }) => id === activeTab)?.component}
       </Container>
-      <Navbar
-        menus={menus}
-        activePage={activePage}
-        setActivePage={setActivePage}
-      />
+      <Navbar menus={menus} activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
   );
 };

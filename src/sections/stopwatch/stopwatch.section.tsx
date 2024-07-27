@@ -2,7 +2,7 @@
 
 import { Button, Grid, Text } from '@mantine/core';
 import styles from './stopwatch.module.css';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { mergeTime, renderTime } from '@/util/time.util';
 import LocalFont from 'next/font/local';
 import {
@@ -11,7 +11,8 @@ import {
   IconPlayerPlayFilled,
   IconPlayerStopFilled
 } from '@tabler/icons-react';
-import { useStopwatchStore } from '@/zustand/store/use-stopwatch-store';
+import { useStopwatchStore } from '@/zustand/use-stopwatch.store';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const chivoMono = LocalFont({
   src: '../../../public/fonts/Chivo_Mono/ChivoMono-VariableFont_wght.ttf',
@@ -24,6 +25,13 @@ export const StopwatchSection = () => {
     useStopwatchStore();
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const lapsRef = useRef<HTMLDivElement>(null);
+
+  const scrollLapsToTop = useCallback(() => {
+    if (lapsRef.current) {
+      lapsRef.current.scrollTop = 0;
+    }
+  }, [lapsRef]);
 
   useEffect(() => {
     if (isActive) {
@@ -68,26 +76,37 @@ export const StopwatchSection = () => {
             </span>
           </div>
           {laps?.length > 0 && (
-            <div className={`${styles.laps} ${chivoMono.className}`}>
-              {laps
-                .map((lap, index) => {
-                  const margin = lap.time - (laps[index - 1]?.time ?? 0);
-                  return (
-                    <div className={styles.lap} key={index}>
-                      <div className={styles.index}>
-                        {String(index + 1).padStart(2, '0')}
-                      </div>
-                      <div className={styles.margin}>
-                        +{mergeTime(renderTime(margin))}
-                      </div>
-                      <div className={styles.time}>
-                        {mergeTime(renderTime(lap.time))}
-                      </div>
-                    </div>
-                  );
-                })
-                .reverse()}
-            </div>
+            <AnimatePresence>
+              <div
+                className={`${styles.laps} ${chivoMono.className}`}
+                ref={lapsRef}
+              >
+                {laps
+                  .map((lap, index) => {
+                    const margin = lap.time - (laps[index - 1]?.time ?? 0);
+                    return (
+                      <motion.div
+                        key={index}
+                        className={styles.lap}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                      >
+                        <div className={styles.index}>
+                          {String(index + 1).padStart(2, '0')}
+                        </div>
+                        <div className={styles.margin}>
+                          +{mergeTime(renderTime(margin))}
+                        </div>
+                        <div className={styles.time}>
+                          {mergeTime(renderTime(lap.time))}
+                        </div>
+                      </motion.div>
+                    );
+                  })
+                  .reverse()}
+              </div>
+            </AnimatePresence>
           )}
           <div className={styles.action}>
             <Button
@@ -119,7 +138,10 @@ export const StopwatchSection = () => {
                 size="lg"
                 rightSection={<IconFlagFilled stroke={2} size={16} />}
                 style={{ borderRadius: '1rem' }}
-                onClick={() => addLap(time)}
+                onClick={() => {
+                  scrollLapsToTop();
+                  addLap(time);
+                }}
               >
                 Lap
               </Button>

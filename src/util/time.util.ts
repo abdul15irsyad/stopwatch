@@ -12,4 +12,4 @@ export const renderTime = (time: number) => {
 };
 
 export const mergeTime = ({ hours, minutes, seconds, milliseconds }) =>
-  `${hours ? `${hours}:` : ''}${minutes}:${seconds}:${milliseconds}`;
+  `${hours !== '00' ? `${hours}:` : ''}${minutes}:${seconds}.${milliseconds}`;

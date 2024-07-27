@@ -33,6 +33,7 @@
   overflow-y: auto;
   margin-bottom: 1rem;
   font-weight: bold;
+  scroll-behavior: smooth;
 }
 
 .stopwatch-section .laps::-webkit-scrollbar {

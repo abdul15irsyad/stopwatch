@@ -6,16 +6,6 @@ import { AllProvider } from '@/components/providers/all-provider';
 import { ColorSchemeScript } from '@mantine/core';
 
 export const figtree = LocalFont({
-  // src: [
-  //   {
-  //     path: '../../public/fonts/Figtree/Figtree-VariableFont_wght.ttf',
-  //     style: 'normal',
-  //   },
-  //   {
-  //     path: '../../public/fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf',
-  //     style: 'italic',
-  //   },
-  // ],
   src: '../../public/fonts/Figtree/Figtree-VariableFont_wght.ttf',
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif']
