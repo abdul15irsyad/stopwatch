@@ -28,10 +28,7 @@
     "simple-import-sort"
   ],
   "rules": {
-    "react/jsx-curly-brace-presence": [
-      "error",
-      { "props": "never", "children": "ignore" }
-    ],
+    "react/jsx-curly-brace-presence": "error",
     "no-unused-vars": 0,
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"

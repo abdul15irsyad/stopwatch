@@ -59,13 +59,13 @@ export const Navbar = () => {
             const Icon = icons[menu.icon];
             return (
               <Grid.Col span="auto" key={index}>
-                <div
+                <button
                   className={`${styles['nav-link']} ${activeTab === menu.id ? styles.active : ''}`}
                   onClick={() => setActiveTab(menu.id)}
                 >
                   <Icon stroke={2} size={20} />
                   <Text mb={0}>{menu.label}</Text>
-                </div>
+                </button>
               </Grid.Col>
             );
           })}
