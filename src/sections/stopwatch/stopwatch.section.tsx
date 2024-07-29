@@ -1,18 +1,20 @@
 'use client';
 
 import { Button, Grid, Text } from '@mantine/core';
-import styles from './stopwatch.module.css';
-import { useCallback, useEffect, useRef } from 'react';
-import { mergeTime, renderTime } from '@/util/time.util';
-import LocalFont from 'next/font/local';
 import {
   IconFlagFilled,
   IconPlayerPauseFilled,
   IconPlayerPlayFilled,
   IconPlayerStopFilled
 } from '@tabler/icons-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import LocalFont from 'next/font/local';
+import { useCallback, useEffect, useRef } from 'react';
+
+import { mergeTime, renderTime } from '@/util/time.util';
 import { useStopwatchStore } from '@/zustand/use-stopwatch.store';
-import { motion, AnimatePresence } from 'framer-motion';
+
+import styles from './stopwatch.module.css';
 
 export const chivoMono = LocalFont({
   src: '../../../public/fonts/Chivo_Mono/ChivoMono-VariableFont_wght.ttf',

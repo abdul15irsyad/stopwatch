@@ -1,7 +1,8 @@
-import Image from 'next/image';
-import styles from './coming-soon.module.css';
 import { Text } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+
+import styles from './coming-soon.module.css';
 
 export const ComingSoon = () => {
   return (

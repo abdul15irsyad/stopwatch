@@ -1,14 +1,16 @@
 'use client';
 
 import { Container, Grid, Text } from '@mantine/core';
-import { ReactNode } from 'react';
 import * as icons from '@tabler/icons-react';
-import styles from './navbar.module.css';
+import { ReactNode } from 'react';
+
 // import { AlarmSection } from '@/sections/alarm/alarm.section';
 import { ClockSection } from '@/sections/clock/clock.section';
 import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
 import { TimerSection } from '@/sections/timer/timer.section';
 import { useNavbarStore } from '@/zustand/use-navbar.store';
+
+import styles from './navbar.module.css';
 
 export const menuIds = ['stopwatch', 'timer', 'clock', 'alarm'] as const;
 

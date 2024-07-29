@@ -1,6 +1,7 @@
 import { Container } from '@mantine/core';
-import { Navbar } from './navbar';
 import { ReactNode } from 'react';
+
+import { Navbar } from './navbar';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
