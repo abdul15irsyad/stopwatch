@@ -10,6 +10,7 @@
 }
 
 .navbar .nav-link {
+  -webkit-tap-highlight-color: transparent;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -18,6 +19,10 @@
   padding: 0.5rem;
   opacity: 0.5;
   transition: 0.3s;
+  background-color: transparent;
+  color: white;
+  border: none;
+  margin: 0 auto;
 }
 
 .navbar .nav-link:hover,

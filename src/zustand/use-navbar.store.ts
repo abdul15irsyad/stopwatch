@@ -1,5 +1,6 @@
-import { menuIds } from '@/layout/navbar';
 import { create } from 'zustand';
+
+import { menuIds } from '@/layout/navbar';
 
 type NavbarStoreState = {
   activeTab: (typeof menuIds)[number];

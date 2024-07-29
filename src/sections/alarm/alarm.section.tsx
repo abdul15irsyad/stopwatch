@@ -1,8 +1,10 @@
 'use client';
 
 import { Text } from '@mantine/core';
-import styles from './alarm.module.css';
+
 import { ComingSoon } from '@/components/coming-soon/coming-soon';
+
+import styles from './alarm.module.css';
 
 export const AlarmSection = () => (
   <div className={styles['alarm-section']}>

@@ -1,8 +1,10 @@
 'use client';
 
 import { Text } from '@mantine/core';
-import styles from './timer.module.css';
+
 import { ComingSoon } from '@/components/coming-soon/coming-soon';
+
+import styles from './timer.module.css';
 
 export const TimerSection = () => (
   <div className={styles['timer-section']}>

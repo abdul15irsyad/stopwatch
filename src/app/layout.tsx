@@ -1,10 +1,12 @@
-import { Metadata } from 'next';
-import LocalFont from 'next/font/local';
 import '@mantine/core/styles.css';
 import './globals.css';
-import { AllProvider } from '@/components/providers/all-provider';
+
 import { ColorSchemeScript } from '@mantine/core';
+import { Metadata } from 'next';
+import LocalFont from 'next/font/local';
 import { ReactNode } from 'react';
+
+import { AllProvider } from '@/components/providers/all-provider';
 
 export const figtree = LocalFont({
   src: '../../public/fonts/Figtree/Figtree-VariableFont_wght.ttf',
@@ -18,10 +20,11 @@ export const BASE_URL =
 export const commonMetaData = {
   images: `${BASE_URL}/meta-image.jpg`,
   title: 'Stopwatch, Clock And Timer',
-  description: 'use timer tools like stopwatch, clock and timer'
+  description: 'Timer tools like stopwatch, clock and timer'
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   ...commonMetaData,
   openGraph: {
     ...commonMetaData
