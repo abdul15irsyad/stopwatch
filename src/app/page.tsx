@@ -2,7 +2,7 @@
 
 import { Layout } from '@/layout/layout';
 import { menus } from '@/layout/navbar';
-import { useNavbarStore } from '@/zustand/use-navbar.store';
+import { useNavbarStore } from '@/hooks/zustand/use-navbar.store';
 
 const HomePage = () => {
   const { activeTab } = useNavbarStore();

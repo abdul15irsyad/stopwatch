@@ -1,0 +1,29 @@
+.empty-data {
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.empty-data .illustration img {
+  width: 100px;
+  height: auto;
+  opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .empty-data {
+    padding: 3rem 1rem;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .empty-data .illustration img {
+    width: 160px;
+  }
+
+  .empty-data .text {
+    text-align: center;
+  }
+}

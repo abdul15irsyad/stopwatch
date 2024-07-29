@@ -9,7 +9,8 @@ type NavbarStoreState = {
 
 export const useNavbarStore = create<NavbarStoreState>((set) => {
   return {
-    activeTab: 'stopwatch',
+    // activeTab: 'stopwatch',
+    activeTab: 'clock',
     setActiveTab: (activeTab) => set({ activeTab })
   };
 });

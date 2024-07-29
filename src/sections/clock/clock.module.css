@@ -2,3 +2,118 @@
   padding-top: 1rem;
   padding-bottom: 80px;
 }
+
+.clock-section .clock {
+  text-align: center;
+}
+
+.clock-section .clock .time {
+  font-size: 100px;
+  margin-top: 1rem;
+}
+
+.clock-section .clock .date {
+  opacity: 0.75;
+  margin-bottom: 1rem;
+}
+
+.clock-section .action {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.list .item .detail .timezone-clock {
+  font-size: 24px;
+}
+
+.list .item .detail .timezone-label {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.list .item .detail p {
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.list .item .item-action {
+  cursor: pointer;
+}
+
+.modal-add-list .timezones {
+  overflow-y: auto;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-add-list .timezones .timezone {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-add-list .timezones .timezone:hover,
+.modal-add-list .timezones .timezone:active {
+  /* background-color: rgba(255, 255, 255, 0.25); */
+  background-color: var(--mantine-primary-color-filled);
+}
+
+.modal-add-list .timezones .timezone h4 {
+  text-wrap: wrap;
+}
+
+.modal-add-list .timezones .timezone p {
+  opacity: 0.75;
+  font-size: 75%;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1200px) {
+  .clock-section .clock .time {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .clock-section .clock .time {
+    font-size: 48px;
+  }
+
+  .modal-add-list .timezones {
+    max-height: unset;
+    position: fixed;
+    top: 110px;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+}

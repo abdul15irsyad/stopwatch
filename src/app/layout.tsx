@@ -40,8 +40,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <ColorSchemeScript />
-        <link rel="icon" href="/favicon.png" />
-        <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"

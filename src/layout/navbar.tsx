@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 import { ClockSection } from '@/sections/clock/clock.section';
 import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
 import { TimerSection } from '@/sections/timer/timer.section';
-import { useNavbarStore } from '@/zustand/use-navbar.store';
+import { useNavbarStore } from '@/hooks/zustand/use-navbar.store';
 
 import styles from './navbar.module.css';
 
