@@ -4,11 +4,11 @@ import { Container, Grid, Text } from '@mantine/core';
 import * as icons from '@tabler/icons-react';
 import { ReactNode } from 'react';
 
+import { useNavbarStore } from '@/hooks/zustand/use-navbar.store';
 // import { AlarmSection } from '@/sections/alarm/alarm.section';
 import { ClockSection } from '@/sections/clock/clock.section';
 import { StopwatchSection } from '@/sections/stopwatch/stopwatch.section';
 import { TimerSection } from '@/sections/timer/timer.section';
-import { useNavbarStore } from '@/zustand/use-navbar.store';
 
 import styles from './navbar.module.css';
 

@@ -8,30 +8,24 @@ import {
   IconPlayerStopFilled
 } from '@tabler/icons-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import LocalFont from 'next/font/local';
 import { useCallback, useEffect, useRef } from 'react';
 
+import { chivoMono } from '@/components/fonts/chivmono';
+import { useStopwatchStore } from '@/hooks/zustand/use-stopwatch.store';
 import { mergeTime, renderTime } from '@/util/time.util';
-import { useStopwatchStore } from '@/zustand/use-stopwatch.store';
 
 import styles from './stopwatch.module.css';
-
-export const chivoMono = LocalFont({
-  src: '../../../public/fonts/Chivo_Mono/ChivoMono-VariableFont_wght.ttf',
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif']
-});
 
 export const StopwatchSection = () => {
   const {
     time,
     isActive,
     laps,
-    globalInterval,
+    stopwatchInterval,
     startStop,
     reset,
     setTime,
-    setGlobalInterval,
+    setStopwatchInterval,
     addLap
   } = useStopwatchStore();
 
@@ -45,16 +39,16 @@ export const StopwatchSection = () => {
 
   useEffect(() => {
     if (isActive) {
-      if (!globalInterval)
-        setGlobalInterval(
+      if (!stopwatchInterval)
+        setStopwatchInterval(
           setInterval(() => {
             setTime((prev: number) => prev + 10);
           }, 10)
         );
     } else {
-      if (globalInterval) {
-        clearInterval(globalInterval);
-        setGlobalInterval(null);
+      if (stopwatchInterval) {
+        clearInterval(stopwatchInterval);
+        setStopwatchInterval(null);
       }
     }
   }, [isActive, setTime]);
@@ -90,7 +84,7 @@ export const StopwatchSection = () => {
                 ref={lapsRef}
               >
                 {laps
-                  .map((lap, index) => {
+                  ?.map((lap, index) => {
                     const margin = lap.time - (laps[index - 1]?.time ?? 0);
                     return (
                       <motion.div
