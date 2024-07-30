@@ -577,10 +577,15 @@ export const timezones = [
     );
   const offsetMinutes = now.utcOffset();
   const offsetHours = Math.floor(offsetMinutes / 60);
+  const renderOffset = `${offsetHours >= 0 ? '+' : '-'}${Math.abs(offsetHours).toString().padStart(2, '0')}:${Math.abs(
+    offsetMinutes % 60
+  )
+    .toString()
+    .padStart(2, '0')}`;
   return {
     id,
     name,
     timezone,
-    offset: `${offsetHours >= 0 ? '+' : '-'}${Math.abs(offsetHours).toString().padStart(2, '0')}:00`
+    offset: renderOffset
   };
 });
