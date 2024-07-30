@@ -49,7 +49,10 @@ export const ClockSection = () => {
       );
 
     return () => {
-      if (clockInterval) clearInterval(clockInterval);
+      if (clockInterval) {
+        clearInterval(clockInterval);
+        setClockInterval(null);
+      }
     };
   }, []);
 
