@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { EmptyData } from '@/components/empty-data/empty-data';
 import { chivoMono } from '@/components/fonts/chivmono';
@@ -53,6 +53,14 @@ export const ClockSection = () => {
     };
   }, []);
 
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const scrollListToBottom = useCallback(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
+  }, [listRef]);
+
   return (
     <div className={styles['clock-section']}>
       <Text fz="h1" fw="bold">
@@ -64,41 +72,45 @@ export const ClockSection = () => {
             <div className={styles.time}>{dayjs().format('HH:mm:ss')}</div>
             <div className={styles.date}>{dayjs().format('MMMM D, YYYY')}</div>
           </div>
-          <div className={styles.list}>
+          <div className={`${styles.list} custom-scroll`} ref={listRef}>
             <AnimatePresence>
-              {list?.map((item) => (
-                <motion.div
-                  key={item.id}
-                  className={styles.item}
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <div className={styles.detail}>
-                    <h4>
-                      <span
-                        className={`${styles['timezone-clock']} ${chivoMono.className}`}
-                      >
-                        {dayjs(time).tz(item.timezone).format('HH:mm')}
-                      </span>{' '}
-                      <span className={styles['timezone-label']}>
-                        {item.name}
-                      </span>
-                    </h4>
-                    <p>
-                      {dayjs(time).format('MMM D')} | GMT {item.offset}
-                    </p>
-                  </div>
-                  <IconTrash
-                    className={styles['item-action']}
-                    color={theme.colors.red[3]}
-                    size={24}
-                    onClick={() =>
-                      setList(list.filter(({ id }) => id !== item.id))
-                    }
-                  />
-                </motion.div>
-              ))}
+              {list
+                ?.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    className={styles.item}
+                    initial={{ scale: 0.95 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <div className={styles.detail}>
+                      <h4>
+                        <span
+                          className={`${styles['timezone-clock']} ${chivoMono.className}`}
+                        >
+                          {dayjs(time).tz(item.timezone).format('HH:mm')}
+                        </span>{' '}
+                        <span className={styles['timezone-label']}>
+                          {item.name}
+                        </span>
+                      </h4>
+                      <p>
+                        {dayjs(time).tz(item.timezone).format('MMM D')} | GMT{' '}
+                        {item.offset}
+                      </p>
+                    </div>
+                    <Button
+                      className={styles['btn-delete']}
+                      variant="transparent"
+                      onClick={() =>
+                        setList(list.filter(({ id }) => id !== item.id))
+                      }
+                    >
+                      <IconTrash color={theme.colors.red[3]} size={24} />
+                    </Button>
+                  </motion.div>
+                ))
+                .reverse()}
             </AnimatePresence>
           </div>
           <div className={styles.action}>
@@ -139,13 +151,14 @@ export const ClockSection = () => {
             filteredTimezone?.map(({ id, timezone, offset, name }, index) => {
               return (
                 <button
-                  key={index}
+                  key={id}
                   className={styles.timezone}
                   onClick={() => {
                     if (!list.find((item) => item.id === id)) {
                       setList([...list, { id, name, timezone, offset }]);
                       close();
                       setSearch('');
+                      scrollListToBottom();
                     }
                   }}
                 >

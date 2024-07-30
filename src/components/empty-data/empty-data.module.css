@@ -9,18 +9,18 @@
 .empty-data .illustration img {
   width: 100px;
   height: auto;
-  opacity: 0.75;
+  opacity: 0.5;
 }
 
 @media (max-width: 767px) {
   .empty-data {
     padding: 3rem 1rem;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .empty-data .illustration img {
-    width: 160px;
+    width: 120px;
   }
 
   .empty-data .text {
