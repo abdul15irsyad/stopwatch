@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+
+import { renderOffset } from '@/util/time.util';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -569,23 +571,15 @@ export const timezones = [
   { id: '65352bc1-f3aa-4f98-bb72-e44c67b7c9a1', timezone: 'Pacific/Tongatapu' },
   { id: '90562e0e-f897-4cda-a480-d5c72a001677', timezone: 'WET' }
 ].map(({ id, timezone }) => {
-  const now = dayjs().tz(timezone);
   const name =
     `${timezone.split('/')[0]}/${timezone.split('/')[timezone.split('/').length - 1]}`.replaceAll(
       '_',
       ' '
     );
-  const offsetMinutes = now.utcOffset();
-  const offsetHours = Math.floor(offsetMinutes / 60);
-  const renderOffset = `${offsetHours >= 0 ? '+' : '-'}${Math.abs(offsetHours).toString().padStart(2, '0')}:${Math.abs(
-    offsetMinutes % 60
-  )
-    .toString()
-    .padStart(2, '0')}`;
   return {
     id,
     name,
     timezone,
-    offset: renderOffset
+    offset: renderOffset(timezone)
   };
 });

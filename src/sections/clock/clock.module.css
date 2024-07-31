@@ -47,6 +47,7 @@
 
 .clock-section .list .item .detail .timezone-clock {
   font-size: 24px;
+  margin-right: 0.25rem;
 }
 
 .clock-section .list .item .detail .timezone-label {
@@ -55,7 +56,7 @@
 }
 
 .clock-section .list .item .detail p {
-  opacity: 0.75;
+  opacity: 0.5;
   font-size: 12px;
 }
 
@@ -83,7 +84,7 @@
 
 .modal-add-list .timezones .timezone {
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   display: flex;
   gap: 1rem;
@@ -103,7 +104,7 @@
 }
 
 .modal-add-list .timezones .timezone p {
-  opacity: 0.75;
+  opacity: 0.5;
   font-size: 75%;
   margin-bottom: 0;
 }
@@ -121,10 +122,6 @@
     right: 1.5rem;
     top: 200px;
     max-height: unset;
-  }
-
-  .clock-section .action {
-    justify-content: flex-end;
   }
 
   .modal-add-list .timezones {
