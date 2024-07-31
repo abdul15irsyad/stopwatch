@@ -6,7 +6,6 @@ type Item = {
   id: string;
   name: string;
   timezone: string;
-  offset: string;
 };
 
 type ClockState = {

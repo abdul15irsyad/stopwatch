@@ -9,7 +9,12 @@ import {
   useMantineTheme
 } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
+import {
+  IconClockPlus,
+  IconSearch,
+  IconTrash,
+  IconTrashOff
+} from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -20,6 +25,7 @@ import { EmptyData } from '@/components/empty-data/empty-data';
 import { chivoMono } from '@/components/fonts/chivmono';
 import { timezones } from '@/data/timezone.data';
 import { useClockStore } from '@/hooks/zustand/use-clock.store';
+import { renderOffset } from '@/util/time.util';
 
 import styles from './clock.module.css';
 dayjs.extend(utc);
@@ -82,9 +88,9 @@ export const ClockSection = () => {
                   <motion.div
                     key={item.id}
                     className={styles.item}
-                    initial={{ scale: 0.95 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
                   >
                     <div className={styles.detail}>
                       <h4>
@@ -99,7 +105,7 @@ export const ClockSection = () => {
                       </h4>
                       <p>
                         {dayjs(time).tz(item.timezone).format('MMM D')} | GMT{' '}
-                        {item.offset}
+                        {renderOffset(item.timezone)}
                       </p>
                     </div>
                     <Button
@@ -119,12 +125,22 @@ export const ClockSection = () => {
           <div className={styles.action}>
             <Button
               size="lg"
-              rightSection={<IconPlus stroke={2} size={16} />}
+              rightSection={<IconClockPlus stroke={2} size={16} />}
               style={{ borderRadius: '1rem' }}
               onClick={open}
             >
               Add
             </Button>
+            {list?.length > 0 && (
+              <Button
+                size="lg"
+                rightSection={<IconTrashOff stroke={2} size={16} />}
+                style={{ borderRadius: '1rem' }}
+                onClick={() => setList([])}
+              >
+                Clear
+              </Button>
+            )}
           </div>
         </Grid.Col>
       </Grid>
@@ -158,7 +174,7 @@ export const ClockSection = () => {
                   className={styles.timezone}
                   onClick={() => {
                     if (!list.find((item) => item.id === id)) {
-                      setList([...list, { id, name, timezone, offset }]);
+                      setList([...list, { id, name, timezone }]);
                       close();
                       setSearch('');
                       scrollListToBottom();
