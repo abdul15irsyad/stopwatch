@@ -47,6 +47,7 @@
 
 .clock-section .list .item .detail .timezone-clock {
   font-size: 24px;
+  margin-right: 0.25rem;
 }
 
 .clock-section .list .item .detail .timezone-label {

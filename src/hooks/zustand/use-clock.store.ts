@@ -24,10 +24,10 @@ export const useClockStore = create<ClockState>(
       options: PersistOptions<Pick<ClockState, 'list'>>
     ) => StateCreator<ClockState>
   )(
-    (set, get) => {
+    (set) => {
       return {
         time: dayjs().toDate(),
-        list: get()?.list ?? [],
+        list: [],
         clockInterval: null,
         setTime: (time) => set({ time }),
         setList: (list) => set({ list }),
