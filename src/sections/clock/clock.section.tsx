@@ -100,6 +100,7 @@ export const ClockSection = () => {
                           {dayjs(time).tz(item.timezone).format('HH:mm')}
                         </span>{' '}
                         <span className={styles['timezone-label']}>
+                          {/* {dayjs().tz(item.timezone).offsetName('long')} */}
                           {item.name}
                         </span>
                       </h4>

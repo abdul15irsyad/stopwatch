@@ -4,11 +4,22 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export const renderTime = (time: number) => {
+export const parseTime = (time: number, isTimer = false) => {
   const milliseconds = Math.floor(time % 1000) / 10;
-  const seconds = Math.floor(time / 1000) % 60;
-  const minutes = Math.floor(time / 60_000) % 60;
-  const hours = Math.floor(time / 3_600_000);
+  const seconds = isTimer
+    ? Math.ceil(time / 1000) % 60
+    : Math.floor(time / 1000) % 60;
+  const minutes = isTimer
+    ? Math.floor(Math.ceil(time / 1000) / 60) % 60
+    : Math.floor(time / 60_000) % 60;
+  const hours = isTimer
+    ? Math.floor(Math.ceil(time / 1000) / 3_600)
+    : Math.floor(time / 3_600_000);
+  return { milliseconds, seconds, minutes, hours };
+};
+
+export const renderTime = (time: number, isTimer = false) => {
+  const { milliseconds, seconds, minutes, hours } = parseTime(time, isTimer);
   return {
     hours: String(hours).padStart(2, '0'),
     minutes: String(minutes).padStart(2, '0'),
@@ -30,3 +41,16 @@ export const renderOffset = (timezone: string) => {
     .toString()
     .padStart(2, '0')}`;
 };
+
+export const countTime = ({
+  milliseconds = 0,
+  seconds,
+  minutes,
+  hour
+}: {
+  milliseconds?: number;
+  seconds: number;
+  minutes: number;
+  hour: number;
+}) =>
+  milliseconds + seconds * 1000 + minutes * 60 * 1000 + hour * 60 * 60 * 1000;

@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css';
 import './globals.css';
+import './circular-progressbar.css';
 
 import { ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
