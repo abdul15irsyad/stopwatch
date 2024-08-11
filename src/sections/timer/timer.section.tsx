@@ -12,7 +12,7 @@ import {
   IconPlus,
   IconSettings
 } from '@tabler/icons-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 import { chivoMono } from '@/components/fonts/chivmono';
@@ -43,15 +43,43 @@ export const TimerSection = () => {
     minutes: parseTime(timer)?.minutes ?? 0,
     seconds: parseTime(timer)?.seconds ?? 0
   });
+  const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
     if (time <= 0 && isActive && timerInterval) {
       clearInterval(timerInterval);
       setTimerInterval(null);
       startStop();
-      ringing();
     }
   }, [time, startStop, setTimerInterval]);
+
+  useEffect(() => {
+    if (typeof Worker !== 'undefined') {
+      workerRef.current = new Worker(
+        new URL(`../../../public/workers/timer.worker.ts`, import.meta.url)
+      );
+
+      workerRef.current.onmessage = (
+        event: MessageEvent<{
+          type: 'timeout';
+          duration: number;
+        }>
+      ) => {
+        if (event.data.type === 'timeout') {
+          console.log('running timeout');
+          // Play the ringing sound when the timer expires
+          const audio = new Audio('/sounds/ring.mp3');
+          audio.play();
+        }
+      };
+
+      return () => {
+        workerRef.current?.terminate();
+      };
+    } else {
+      console.error('Web Workers are not supported in this environment.');
+    }
+  }, []);
 
   useEffect(() => {
     if (isActive) {
@@ -69,9 +97,14 @@ export const TimerSection = () => {
     }
   }, [isActive, setTime, setTimerInterval]);
 
-  const ringing = useCallback(() => {
-    console.log('ringing');
-  }, []);
+  const handleWorker = (type: 'start' | 'pause' | 'resume' | 'reset') => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({
+        type,
+        duration: time
+      });
+    }
+  };
 
   return (
     <div className={styles['timer-section']}>
@@ -128,7 +161,15 @@ export const TimerSection = () => {
                   )
                 }
                 style={{ borderRadius: '1rem' }}
-                onClick={() => startStop()}
+                onClick={() => {
+                  startStop();
+                  if (!isActive) {
+                    if (time === timer) handleWorker('start');
+                    else handleWorker('resume');
+                  } else {
+                    handleWorker('pause');
+                  }
+                }}
               >
                 {!isActive ? (time < timer ? 'Resume' : 'Start') : 'Pause'}
               </Button>
@@ -138,7 +179,10 @@ export const TimerSection = () => {
                 size="lg"
                 rightSection={<IconPlayerStopFilled stroke={2} size={16} />}
                 style={{ borderRadius: '1rem' }}
-                onClick={() => reset()}
+                onClick={() => {
+                  reset();
+                  handleWorker('reset');
+                }}
               >
                 Reset
               </Button>
