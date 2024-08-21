@@ -12,8 +12,7 @@ import {
   IconPlus,
   IconSettings
 } from '@tabler/icons-react';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 import { chivoMono } from '@/components/fonts/chivmono';
@@ -24,59 +23,71 @@ import styles from './timer.module.css';
 
 export const TimerSection = () => {
   const theme = useMantineTheme();
-  const { enqueueSnackbar } = useSnackbar();
 
   const {
     timer,
     time,
     isActive,
     timerInterval,
-    isRehydrated,
     setTimer,
     setTime,
     setTimerInterval,
     startStop,
     reset
   } = useTimerStore();
-
   const percentage = Math.floor((time * 100) / timer);
   const [opened, { open, close }] = useDisclosure(false);
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [settingTimer, setSettingTimer] = useState({
-    hour: 0,
-    minutes: 0,
-    seconds: 0
+    hour: parseTime(timer)?.hours ?? 0,
+    minutes: parseTime(timer)?.minutes ?? 0,
+    seconds: parseTime(timer)?.seconds ?? 0
   });
-
-  useEffect(
-    () =>
-      setSettingTimer({
-        hour: parseTime(timer)?.hours ?? 0,
-        minutes: parseTime(timer)?.minutes ?? 0,
-        seconds: parseTime(timer)?.seconds ?? 0
-      }),
-    [timer]
-  );
+  const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
     if (time <= 0 && isActive && timerInterval) {
       clearInterval(timerInterval);
       setTimerInterval(null);
       startStop();
-      enqueueSnackbar('times up', {
-        autoHideDuration: 3000,
-        variant: 'success'
-      });
     }
   }, [time, startStop, setTimerInterval]);
+
+  useEffect(() => {
+    if (typeof Worker !== 'undefined') {
+      workerRef.current = new Worker(
+        new URL(`../../../public/workers/timer.worker.ts`, import.meta.url)
+      );
+
+      workerRef.current.onmessage = (
+        event: MessageEvent<{
+          type: 'timeout';
+          duration: number;
+        }>
+      ) => {
+        if (event.data.type === 'timeout') {
+          console.log('running timeout');
+          // Play the ringing sound when the timer expires
+          const audio = new Audio('/sounds/ring.mp3');
+          audio.play();
+        }
+      };
+
+      return () => {
+        workerRef.current?.terminate();
+      };
+    } else {
+      console.error('Web Workers are not supported in this environment.');
+    }
+  }, []);
 
   useEffect(() => {
     if (isActive) {
       if (!timerInterval)
         setTimerInterval(
           setInterval(() => {
-            setTime((prev: number) => (prev > 0 ? prev - 100 : 0));
-          }, 100)
+            setTime((prev: number) => (prev > 0 ? prev - 10 : 0));
+          }, 10)
         );
     } else {
       if (timerInterval) {
@@ -86,7 +97,14 @@ export const TimerSection = () => {
     }
   }, [isActive, setTime, setTimerInterval]);
 
-  if (!isRehydrated) return null;
+  const handleWorker = (type: 'start' | 'pause' | 'resume' | 'reset') => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({
+        type,
+        duration: time
+      });
+    }
+  };
 
   return (
     <div className={styles['timer-section']}>
@@ -101,7 +119,7 @@ export const TimerSection = () => {
               value={percentage}
               styles={{
                 path: {
-                  transition: '.75s',
+                  transition: '.5s',
                   stroke:
                     percentage < 15 ? theme.colors.red[5] : theme.colors.blue[7]
                 },
@@ -145,6 +163,12 @@ export const TimerSection = () => {
                 style={{ borderRadius: '1rem' }}
                 onClick={() => {
                   startStop();
+                  if (!isActive) {
+                    if (time === timer) handleWorker('start');
+                    else handleWorker('resume');
+                  } else {
+                    handleWorker('pause');
+                  }
                 }}
               >
                 {!isActive ? (time < timer ? 'Resume' : 'Start') : 'Pause'}
@@ -157,6 +181,7 @@ export const TimerSection = () => {
                 style={{ borderRadius: '1rem' }}
                 onClick={() => {
                   reset();
+                  handleWorker('reset');
                 }}
               >
                 Reset
